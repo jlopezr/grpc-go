@@ -12,8 +12,32 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
+func randomStringFromSet(a ...string) string {
+	n := len(a)
+	if n == 0 {
+		return ""
+	}
+	return a[rand.Intn(n)]
+}
+
 func randomBool() bool {
 	return rand.Intn(2) == 1
+}
+
+func randomInt(min, max int) int {
+	return min + rand.Int()%(max-min+1)
+}
+
+func randomFloat64(min, max float64) float64 {
+	return min + rand.Float64()*(max-min)
+}
+
+func randomFloat32(min, max float32) float32 {
+	return min + rand.Float32()*(max-min)
+}
+
+func randomID() string {
+	return uuid.New().String()
 }
 
 func randomKeyboardLayout() pb.Keyboard_Layout {
@@ -27,16 +51,15 @@ func randomKeyboardLayout() pb.Keyboard_Layout {
 	}
 }
 
-func randomCPUBrand() string {
-	return randomStringFromSet("Intel", "AMD")
+func randomScreenPanel() pb.Screen_Panel {
+	if rand.Intn(2) == 1 {
+		return pb.Screen_IPS
+	}
+	return pb.Screen_OLED
 }
 
-func randomStringFromSet(a ...string) string {
-	n := len(a)
-	if n == 0 {
-		return ""
-	}
-	return a[rand.Intn(n)]
+func randomCPUBrand() string {
+	return randomStringFromSet("Intel", "AMD")
 }
 
 func randomCPUName(brand string) string {
@@ -55,14 +78,6 @@ func randomCPUName(brand string) string {
 		"Ryzen 5 PRO 3500U",
 		"Ryzen 3 PRO 3200GE",
 	)
-}
-
-func randomInt(min, max int) int {
-	return min + rand.Int()%(max-min+1)
-}
-
-func randomFloat64(min, max float64) float64 {
-	return min + rand.Float64()*(max-min)
 }
 
 func randomGPUBrand() string {
@@ -85,32 +100,6 @@ func randomGPUName(brand string) string {
 		"RX 5700-XT",
 		"RX Vega-56",
 	)
-}
-
-func randomFloat32(min, max float32) float32 {
-	return min + rand.Float32()*(max-min)
-}
-
-func randomScreenResolution() *pb.Screen_Resolution {
-	height := randomInt(1080, 4320)
-	width := height * 16 / 9
-
-	resolution := &pb.Screen_Resolution{
-		Width:  uint32(width),
-		Height: uint32(height),
-	}
-	return resolution
-}
-
-func randomScreenPanel() pb.Screen_Panel {
-	if rand.Intn(2) == 1 {
-		return pb.Screen_IPS
-	}
-	return pb.Screen_OLED
-}
-
-func randomID() string {
-	return uuid.New().String()
 }
 
 func randomLaptopBrand() string {

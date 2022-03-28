@@ -105,9 +105,15 @@ func NewHDD() *pb.Storage {
 
 // NewScreen returns a new sample Screen
 func NewScreen() *pb.Screen {
+	height := randomInt(1080, 4320)
+	width := height * 16 / 9
+
 	screen := &pb.Screen{
-		SizeInch:   randomFloat32(13, 17),
-		Resolution: randomScreenResolution(),
+		SizeInch: randomFloat32(13, 17),
+		Resolution: &pb.Screen_Resolution{
+			Width:  uint32(width),
+			Height: uint32(height),
+		},
 		Panel:      randomScreenPanel(),
 		Multitouch: randomBool(),
 	}
